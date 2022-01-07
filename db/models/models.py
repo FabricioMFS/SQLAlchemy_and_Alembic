@@ -8,8 +8,10 @@ from sqlalchemy import (Column, String, DateTime, Boolean, BigInteger, ForeignKe
 from datetime import datetime
 from uuid import uuid4
 
+from sqlalchemy.orm.base import attribute_str
+
 Base = declarative_base()
-# ------------ Examples -------------------
+
 
 class Client(Base):
     __tablename__ = 'clients'

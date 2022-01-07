@@ -50,12 +50,9 @@ class CrudBase:
         except Exception as error:
             return show_error(error)
 
-    async def search_by_id(self, db: Session, id: int, context_ids: list = None, query_params: dict = {}):
+    async def search_by_id(self, db: Session, id: int, query_params: dict = {}):
 
         params = []
-
-        if context_ids:
-            params.append(self.model.context_id.in_(context_ids))
         
         if self.soft_delete:
             params.append(self.model.deleted_at == None)
@@ -76,12 +73,9 @@ class CrudBase:
         except Exception as error:
             return show_error(error)
 
-    async def search_by_ids(self, db: Session, ids: list, context_ids: list = None, query_params:dict = {}):
+    async def search_by_ids(self, db: Session, ids: list, query_params:dict = {}):
 
         params = []
-
-        if context_ids:
-            params.append(self.model.context_id.in_(context_ids))
         
         if self.soft_delete:
             params.append(self.model.deleted_at == None)
@@ -102,12 +96,9 @@ class CrudBase:
         except Exception as error:
             return show_error(error)
 
-    async def show_all(self, db: Session, context_ids: list = None, query_params:dict = {}):
+    async def show_all(self, db: Session, query_params:dict = {}):
         params = []
 
-        if context_ids:
-            params.append(self.model.context_id.in_(context_ids))
-        
         if self.soft_delete:
             params.append(self.model.deleted_at == None)
         

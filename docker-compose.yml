@@ -1,0 +1,25 @@
+version: '3.3'
+
+volumes:
+  vol_estudos_SQL:
+    driver: local
+
+services:
+
+  db_estudos_SQL:
+    image: "postgres:latest"
+    container_name: "srvdb-estudos_SQL"
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=estudos_SQL
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=secret
+    volumes:
+      - vol_estudos_SQL:/var/lib/postgresql/data
+    networks:
+      - docker_net
+
+networks:
+  docker_net:
+    driver: bridge

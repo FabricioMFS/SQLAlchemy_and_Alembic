@@ -2,8 +2,9 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 
-URL_DB_ASYNC = "postgresql+asyncpg://postgres:secret@localhost/estudos_SQL"
-DB_POOL_SIZE = 5
+from core.configs import settings
+
+settings.reload()
 
 class DbConnect:
     def __init__(self, URL_ASYNC=None, URL_SYNC=None):
@@ -11,7 +12,7 @@ class DbConnect:
         self.URL_SYNC = URL_SYNC
 
         if self.URL_ASYNC:
-            self.engine = create_async_engine(self.URL_ASYNC, pool_size=DB_POOL_SIZE)
+            self.engine = create_async_engine(self.URL_ASYNC, pool_size=settings.DB_POOL_SIZE)
             self.session_local = sessionmaker(bind=self.engine,
                                               autoflush=False,
                                               autocommit=False,
@@ -32,7 +33,7 @@ class DbConnect:
         finally:
             pass
 
-db = DbConnect(URL_ASYNC=URL_DB_ASYNC)
+db = DbConnect(URL_ASYNC=settings.URL_DB_ASYNC)
 
 
 

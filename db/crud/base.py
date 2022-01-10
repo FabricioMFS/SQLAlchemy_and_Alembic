@@ -70,7 +70,7 @@ class CrudBase(DbConnect):
         try:
             async with next(self.db.get_db()) as conn:
                 obj = await conn.execute(query)
-                return res_success(obj.scalars().all())
+                return res_success(obj.scalar())
         except Exception as error:
             return show_error(error)
 
@@ -121,7 +121,7 @@ class CrudBase(DbConnect):
             return show_error(error)
 
     async def modify(self, id, values: dict):
-
+        values['updated_at'] = datetime.now()
         query = update(self.model).where(self.model.id == id).values(values)
 
         try:
@@ -134,7 +134,7 @@ class CrudBase(DbConnect):
             return show_error(error)
 
     async def modify_multiple(self, ids: list, values: dict):
-
+        values = [i.update({'updated_at': datetime.now()}) for i in values]
         query = update(self.model).where(self.model.id.in_(ids)).values(values)
 
         try:

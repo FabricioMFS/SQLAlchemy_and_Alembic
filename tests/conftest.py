@@ -19,18 +19,18 @@ def event_loop(request):
 @pytest.mark.asyncio
 @pytest.fixture(scope='session')
 def create_db():
-    # obtem url do banco pela variavel de ambiente e constroi uma url de teste sync
+    # obtém url do banco pela variável de ambiente e constrói uma url de teste sync
     index = settings.URL_DB_ASYNC.find(':') 
     URL_DB_SYNC_TEST = f'postgresql{settings.URL_DB_ASYNC[index:]}_test'
 
-    # cria instancia de teste do banco de dados
+    # cria instância de teste do banco de dados
     engine = create_engine(URL_DB_SYNC_TEST)
     if not database_exists(engine.url):
         create_database(engine.url)
 
     yield
 
-    # destrói instancia de teste do banco de dados
+    # destrói instância de teste do banco de dados
     if database_exists(engine.url):
         drop_database(engine.url)
 
@@ -38,7 +38,7 @@ def create_db():
 @pytest.mark.asyncio
 @pytest.fixture(scope='function')
 def apply_migrations(create_db):
-    # substitue as variáveis de ambiente prod para test
+    # substitui as variáveis de ambiente prod para test
     settings.reload()
 
     URL_DB =settings.URL_DB_ASYNC

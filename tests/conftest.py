@@ -1,3 +1,4 @@
+from bdb import Breakpoint
 import pytest
 import alembic
 import asyncio
@@ -6,7 +7,7 @@ from os import environ
 from sqlalchemy import create_engine
 from sqlalchemy_utils import database_exists, create_database, drop_database
 
-from ..core.configs import settings
+from core.configs import settings
 
 @pytest.fixture(scope='session')
 def event_loop(request):
@@ -22,7 +23,7 @@ def create_db():
     # obtém url do banco pela variável de ambiente e constrói uma url de teste sync
     index = settings.URL_DB_ASYNC.find(':') 
     URL_DB_SYNC_TEST = f'postgresql{settings.URL_DB_ASYNC[index:]}_test'
-
+   
     # cria instância de teste do banco de dados
     engine = create_engine(URL_DB_SYNC_TEST)
     if not database_exists(engine.url):

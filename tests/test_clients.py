@@ -2,6 +2,8 @@ from attr import dataclass
 import pytest
 from pydantic import UUID4
 from .fixtures import create_one_client
+from db.crud.clients import RpClient
+
 
 
 
@@ -14,7 +16,6 @@ class TestClients:
 
     @pytest.mark.asyncio
     async def test_create_cliente_(self, apply_migrations):
-        from ..db.crud.clients import RpClient
 
         res =  await RpClient.create(value=self.data)
 
@@ -23,7 +24,7 @@ class TestClients:
 
     @pytest.mark.asyncio
     async def test_update_fields(self, create_one_client):
-        from ..db.crud.clients import RpClient
+       
         id = create_one_client.id
 
         res =  await RpClient.modify(id=id, values=self.data)

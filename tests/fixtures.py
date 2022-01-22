@@ -1,11 +1,12 @@
 import pytest
+from db.crud.clients import RpClient
+from faker import Faker
+seeds_generation = Faker() 
 
 @pytest.mark.asyncio
 @pytest.fixture(scope='function')
 async def create_one_client(apply_migrations):
-    from db.crud.clients import RpClient
-    from faker import Faker
-    seeds_generation = Faker() 
+    
 
     data = {
         'name': seeds_generation.pystr(max_chars=50),
